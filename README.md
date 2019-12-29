@@ -3,4 +3,4 @@ Sisällönhallintajärjestelmä, joka ei vaadi tietokantoja. Aloitettu Himoksell
 
 ## Asentaminen
 
-Kopioi tiedostot täältä Githubista web-palvelimelle. Kirjautua voi osoitteessa http://asennuksenosoite/kirjaudu.php.
+Kopioi tiedostot täältä Githubista web-palvelimelle. Kirjautua voi osoitteessa http://asennuksenosoite/kirjaudu.php. Salasana ja käyttäjänimi ovat molemmat asd.
