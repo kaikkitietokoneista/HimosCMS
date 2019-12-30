@@ -27,9 +27,9 @@
   <head>
     <meta charset="UTF-8">
     <title>Asetukset</title>
-    <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
-    <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
-    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script>
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script>
   </head>
   <body>
     <nav class="navbar navbar-default">
@@ -156,7 +156,7 @@
           <input type="hidden" name="luovarmuuskopio" value="kyllä">
           <div class="form-row">
            <div class="form-group col-md-10">
-             <h4>Varmuuskopio (Tulossa pian)</h4>
+             <h4>Varmuuskopio</h4>
            </div>
             <div class="form-group col-md-2">
               <input type='submit' class="btn btn-primary" value='Luo'>
