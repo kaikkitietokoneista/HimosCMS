@@ -9,6 +9,8 @@
       if ($_POST["passu"] != "") {
         $suolattupassu = password_hash($_POST["passu"], PASSWORD_DEFAULT);
         $asetukset->hallintasalasana = $suolattupassu;
+      } else {
+        $asetukset->hallintasalasana = $salasana;
       }
       $asetukset->hallintanimi = $_POST["kayttajanimi"];
       if (isset($_POST['automylaosa'])) {
@@ -23,7 +25,7 @@
     }
   ?>
   <!DOCTYPE html>
-  <html lang="en">
+  <html lang="fi">
   <head>
     <meta charset="UTF-8">
     <title>Asetukset</title>
