@@ -84,20 +84,20 @@
           $zip = new ZipArchive;
           if ($zip->open(date("Y-m-d") . '.zip') === TRUE) {
               //Etusivun osat
-              $arrayetusivuista = scandir("osat");
+              $arrayetusivuista = scandir(__DIR__ . "/osat/");
               foreach ($arrayetusivuista as $key => $value) {
                 if ($value != ".") {
                   if ($value != "..") {
-                    $zip->addFile('osat/' . $value, $value);
+                    $zip->addFile(__DIR__ . "/osat/" . $value, $value);
                   }
                 }
               }
               //Sivut
-              $arraysivuista = scandir("sivut");
+              $arraysivuista = scandir(__DIR__ . "/sivut/");
               foreach ($arraysivuista as $key => $value) {
                 if ($value != ".") {
                   if ($value != "..") {
-                    $zip->addFile('sivut/' . $value, $value);
+                    $zip->addFile(__DIR__ . "/sivut/" . $value, $value);
                   }
                 }
               }

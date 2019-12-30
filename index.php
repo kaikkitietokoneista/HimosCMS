@@ -24,9 +24,10 @@ include 'asetukset.php';
 
     if ($_GET["s"]) {
       $haluttusivu = $_GET["s"];
-      if (file_exists("sivut/" . $haluttusivu) == TRUE) {
-        $tiedosto = fopen("sivut/" . $haluttusivu, "r");
-        $sisältö = fread($tiedosto, filesize("sivut/" . $haluttusivu));
+      $haluttusivusuojattuna = "sivut/" . basename($haluttusivu);
+      if (file_exists($haluttusivusuojattuna) == TRUE) {
+        $tiedosto = fopen($haluttusivusuojattuna, "r");
+        $sisältö = fread($tiedosto, filesize($haluttusivusuojattuna));
         echo $sisältö;
 
       } else {
