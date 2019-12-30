@@ -10,7 +10,7 @@ include 'asetukset.php';
 <link href="//netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
 <script src="//netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script>
-<?php echo $sivunnimi; ?>
+<title><?php echo $sivunnimi; ?></title>
 
 <div class="container">
 <?php
