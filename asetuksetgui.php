@@ -16,8 +16,6 @@
       } else {
         $asetukset->automylaosa = "false";
       }
-      $asetukset->suolo = $_POST["suolo"];
-
       $json = json_encode($asetukset);
 
       $jsontiedosto = fopen("asetukset.json", "w") or die("Kriittinen virhe!");

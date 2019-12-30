@@ -35,7 +35,7 @@
 				 	<input type="password" class="form-control" id="salasana" name="salasana">
 				</div>
 				<div class="form-group col-md-12">
-					<input type='submit' class="btn btn-primary" value='Luo'>
+					<input type='submit' class="btn btn-primary" value='Kirjaudu'>
 				</div>
 			</div>
 		</form>
