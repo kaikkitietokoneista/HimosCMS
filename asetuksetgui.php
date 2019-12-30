@@ -29,9 +29,9 @@
   <head>
     <meta charset="UTF-8">
     <title>Asetukset</title>
-    <link href="//netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
-    <script src="//netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script>
+    <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
+    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script>
   </head>
   <body>
     <nav class="navbar navbar-default">
@@ -80,30 +80,65 @@
     <div class="container">
         <hr>
         <?php
-        if ($_POST["luovarmuuskopio"] === "kyllä") {
-          $zip = new ZipArchive;
-          if ($zip->open(date("Y-m-d") . '.zip') === TRUE) {
-              //Etusivun osat
-              $arrayetusivuista = scandir(__DIR__ . "/osat/");
-              foreach ($arrayetusivuista as $key => $value) {
-                if ($value != ".") {
-                  if ($value != "..") {
-                    $zip->addFile(__DIR__ . "/osat/" . $value, $value);
-                  }
-                }
-              }
-              //Sivut
-              $arraysivuista = scandir(__DIR__ . "/sivut/");
-              foreach ($arraysivuista as $key => $value) {
-                if ($value != ".") {
-                  if ($value != "..") {
-                    $zip->addFile(__DIR__ . "/sivut/" . $value, $value);
-                  }
-                }
-              }
+        if ($_GET["palauta"] != "") {
+          $nimi = $_GET["palauta"];
 
-              $zip->close();
-              ?>
+          $array = scandir("varmuuskopiot");
+          foreach ($array as $key => $value) {
+            if (exec("unzip varmuuskopiot/$nimi")) {
+              if ($value != ".") {
+                if ($value != "..") {
+                  //Tarkastetaan, ettei kyseessä ole zip-paketti
+                    if (!strstr( $value, '.zip' )) {
+                      switch ($value) {
+                        case 'keskiosa':
+                          rename('varmuuskopiot/' . $value, 'osat/' . $value);
+                          break;
+                        case 'ylaosa':
+                          rename('varmuuskopiot/' . $value, 'osat/' . $value);
+                          break;
+                        case 'alaosa':
+                          rename('varmuuskopiot/' . $value, 'osat/' . $value);
+                          break;
+                        default:
+                          rename('varmuuskopiot/' . $value, 'sivut/' . $value);
+                          break;
+                      }
+                    }
+                  }
+                }
+              }
+            }
+            ?>
+              <div class="alert alert-success alert-dismissible" role="alert">
+                <span type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></span>
+                <strong>Varmuuskopion palauttaminen onnistui.</strong>
+              </div>
+              <?php
+          }
+
+        //Varmuuskopion poistaminen
+        if ($_GET["poista"] != "") {
+          $poistettavasivu = __DIR__ . "/varmuuskopiot/" . $_GET["poista"];
+          unlink($poistettavasivu);
+            ?>
+            <div class="alert alert-success alert-dismissible" role="alert">
+              <span type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></span>
+              <strong>Varmuuskopio on poistettu</strong> nimeltä <?php echo $_GET["poista"]; ?>
+              <!-- Tyhjentää GET parametrit JS:n avulla -->
+              <script>
+                location.search = "";
+              </script>
+            </div>
+            <?php
+        }
+
+        //Varmuuskopion luominen
+        if ($_POST["luovarmuuskopio"] === "kyllä") {
+          date_default_timezone_set("Europe/Helsinki");
+          $aika = date("Y-m-d") . '-' .  date("h:i:sa");
+          if (exec("zip -r varmuuskopiot/varmuuskopio-$aika.zip osat/ sivut/")) {
+            ?>
               <div class="alert alert-success alert-dismissible" role="alert">
                 <span type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></span>
                 <strong>Varmuuskopion tekeminen onnistui.</strong>
@@ -130,6 +165,22 @@
             </div>
           </div>
         </form>
+      </div>
+      <div class="container">
+        <ul class="list-group">
+          <li class="list-group-item active">Varmuuskopiot</li>
+          <?php
+          //Varmuuskopiot
+          $arraysivuista = scandir("varmuuskopiot");
+          foreach ($arraysivuista as $key => $value) {
+            if ($value != ".") {
+              if ($value != "..") {
+                echo '<li class="list-group-item">' . $value . '<span class="badge"><a style="color:white;" href="?palauta=' . $value . '">palauta</a></span><span class="badge"><a style="color:white;" href="varmuuskopiot/' . $value . '">lataa</a></span><span class="badge"><a style="color:white;" href="?poista=' . $value . '">poista</a></span></li>';
+              }
+            }
+          }
+        ?>
+        </ul>
       </div>
   </body>
   </html>
