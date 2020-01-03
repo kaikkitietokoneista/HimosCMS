@@ -1,15 +1,18 @@
 <?php
 include 'asetukset.php';
 
- ?>
-<style type="text/css">
+if ($teema === "bootstrap") {
+  ?>
+  <link href="//netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
+  <script src="//netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script>
   <?php
-    //Custom CSS
-   ?>
-</style>
-<link href="//netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
-<script src="//netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script>
+} else {
+  ?>
+  <link href="teemat/<?php echo $teema; ?>.css" rel="stylesheet">
+  <?php
+}
+ ?>
 <title><?php echo $sivunnimi; ?></title>
 
 <div class="container">

@@ -60,7 +60,7 @@
         <?php
       } else {
         $tiedosto = fopen(__DIR__ . "/sivut/" . $tiedosto, "w") or die("Kriittinen virhe!");
-        fwrite($tiedosto, "<h2>Otsikko</h2><p>Voit aloittaa muokkaamisen</p>");
+        fwrite($tiedosto, '<h2>Otsikko</h2><p>Voit aloittaa muokkaamisen</p><link rel="stylesheet" href="teemat/'.$teema.'.css">');
         fclose($tiedosto);
         ?>
         <div class="alert alert-success alert-dismissible" role="alert">

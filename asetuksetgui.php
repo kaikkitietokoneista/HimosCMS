@@ -18,6 +18,11 @@
       } else {
         $asetukset->automylaosa = "false";
       }
+
+      $asetukset->editori = $_POST["editori"];
+
+      $asetukset->teema = $_POST["teema"];
+
       $json = json_encode($asetukset);
 
       $jsontiedosto = fopen("asetukset.json", "w") or die("Kriittinen virhe!");
@@ -51,6 +56,8 @@
       </div>
     </nav>
     <div class="container">
+      <h3>Asetukset</h3>
+      <hr>
       <form method="post" action="asetuksetgui.php">
         <div class="form-row">
          <div class="form-group col-md-6">
@@ -71,6 +78,75 @@
           <div class="form-group col-md-1">
             <input type="checkbox" class="form-control" id="automylaosa" name="automylaosa" <?php if ($automylaosa == "true") {echo "checked";}?>>
           </div>
+          <?php
+          if ($editori === "yksinkertainen") {
+            ?>
+            <div class="alert alert-warning">
+              <strong>Teemat eivät ole käytössä</strong>, kun yksinkertainen-editori on käytössä.
+            </div>
+            <?php
+          } else {
+            ?>
+            <div class="form-group col-md-12">
+                 <label for="teema">Teema</label>
+                 <select class="form-control" name="teema" id="teema">
+                   <option><?php echo $teema ?></option>
+                   <?php
+                   $arrayteemoista = scandir("teemat");
+                   foreach ($arrayteemoista as $key => $value) {
+                     if ($value != ".") {
+                       if ($value != "..") {
+                         if ($value != $teema) {
+                           echo "<option value='" . $value . "'>" . $value . "</option>";
+                         }
+                       }
+                     }
+                   }
+                   $value = "bootstrap";
+                   if ($value != $teema) {
+                     echo "<option value='" . $value . "'>" . $value . "</option>";
+                   }
+                   ?>
+                 </select>
+               </div>
+            <?php
+          }
+           if ($editori === "yksinkertainen") {
+             ?>
+            <div id="editorit">
+               <div class="form-group col-md-6">
+                 <label for="editorit">Editori:</label>
+                 <div class="radio">
+                   <label><input type="radio" name="editori" value="yksinkertainen" checked>Yksinkertainen (Teemat ei ole käytössä)</label>
+                 </div>
+               </div>
+               <div class="form-group col-md-6">
+                 <br>
+                 <div class="radio">
+                   <label><input type="radio" name="editori" value="vedajatiputa">Vedä ja tiputa</label>
+                 </div>
+               </div>
+             </div>
+             <?php
+           } else { ?>
+
+               <div id="editorit">
+                <div class="form-group col-md-6">
+                  <label for="editorit">Editori:</label>
+                  <div class="radio">
+                    <label><input type="radio" name="editori" value="yksinkertainen">Yksinkertainen (Teemat ei ole käytössä)</label>
+                  </div>
+                </div>
+                <div class="form-group col-md-6">
+                  <br>
+                  <div class="radio">
+                    <label><input type="radio" name="editori" value="vedajatiputa" checked>Vedä ja tiputa</label>
+                  </div>
+                </div>
+              </div>
+           <?php
+           }
+           ?>
           <div class="form-group col-md-12">
             <input type='submit' class="btn btn-primary" value='Tallenna'>
           </div>
