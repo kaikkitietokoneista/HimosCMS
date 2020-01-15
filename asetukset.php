@@ -24,7 +24,6 @@ $käyttäjänimi = json_decode($asetusjson)->{'hallintanimi'};
 $salasana = json_decode($asetusjson)->{'hallintasalasana'};
 $automylaosa = json_decode($asetusjson)->{'automylaosa'};
 $teema = json_decode($asetusjson)->{'teema'};
-$editori = json_decode($asetusjson)->{'editori'};
 
 if (!isset($_SESSION["kirjautunut"])) {
   $kirjautunut = FALSE;

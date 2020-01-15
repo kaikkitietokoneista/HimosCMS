@@ -19,7 +19,7 @@
         <a class="navbar-brand" href="/"><?php echo $sivunnimi; ?></a>
       </div>
       <ul class="nav navbar-nav">
-        <li><a href="#">Työpöytä (Dashboard)</a></li>
+        <li><a href="tyopoyta.php">Työpöytä (Dashboard)</a></li>
         <li><a href="muokkain.php">Muokkaa sivua</a></li>
         <li><a href="hallinnoi.php">Hallinnoi sivuja</a></li>
         <li><a href="asetuksetgui.php">Asetukset</a></li>
@@ -60,7 +60,7 @@
         <?php
       } else {
         $tiedosto = fopen(__DIR__ . "/sivut/" . $tiedosto, "w") or die("Kriittinen virhe!");
-        fwrite($tiedosto, '<h2>Otsikko</h2><p>Voit aloittaa muokkaamisen</p><link rel="stylesheet" href="teemat/'.$teema.'.css">');
+        fwrite($tiedosto, "<h2>Otsikko</h2><p>Voit aloittaa muokkaamisen</p>");
         fclose($tiedosto);
         ?>
         <div class="alert alert-success alert-dismissible" role="alert">

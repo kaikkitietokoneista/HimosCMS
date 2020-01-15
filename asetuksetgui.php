@@ -18,11 +18,7 @@
       } else {
         $asetukset->automylaosa = "false";
       }
-
-      $asetukset->editori = $_POST["editori"];
-
       $asetukset->teema = $_POST["teema"];
-
       $json = json_encode($asetukset);
 
       $jsontiedosto = fopen("asetukset.json", "w") or die("Kriittinen virhe!");
@@ -45,7 +41,7 @@
           <a class="navbar-brand" href="/"><?php echo $sivunnimi; ?></a>
         </div>
         <ul class="nav navbar-nav">
-          <li><a href="#">Työpöytä (Dashboard)</a></li>
+          <li><a href="tyopoyta.php">Työpöytä (Dashboard)</a></li>
           <li><a href="muokkain.php">Muokkaa sivua</a></li>
           <li><a href="hallinnoi.php">Hallinnoi sivuja</a></li>
           <li><a href="asetuksetgui.php">Asetukset</a></li>
@@ -56,8 +52,6 @@
       </div>
     </nav>
     <div class="container">
-      <h3>Asetukset</h3>
-      <hr>
       <form method="post" action="asetuksetgui.php">
         <div class="form-row">
          <div class="form-group col-md-6">
@@ -69,7 +63,7 @@
             <input type="password" class="form-control" name="passu" placeholder="Uusi salasana..." name="passu" id="inputtipassu">
           </div>
           <div class="form-group col-md-12">
-            <label for="sivunnimi">Sivun nimi</label>
+            <label for="sivunnimi">Sivuston nimi</label>
             <input type="text" class="form-control" id="sivunnimi" name="sivunnimi" value="<?php echo $sivunnimi;?>">
           </div>
           <div class="form-group col-md-11">
@@ -78,75 +72,21 @@
           <div class="form-group col-md-1">
             <input type="checkbox" class="form-control" id="automylaosa" name="automylaosa" <?php if ($automylaosa == "true") {echo "checked";}?>>
           </div>
-          <?php
-          if ($editori === "yksinkertainen") {
-            ?>
-            <div class="alert alert-warning">
-              <strong>Teemat eivät ole käytössä</strong>, kun yksinkertainen-editori on käytössä.
-            </div>
-            <?php
-          } else {
-            ?>
-            <div class="form-group col-md-12">
-                 <label for="teema">Teema</label>
-                 <select class="form-control" name="teema" id="teema">
-                   <option><?php echo $teema ?></option>
-                   <?php
-                   $arrayteemoista = scandir("teemat");
-                   foreach ($arrayteemoista as $key => $value) {
-                     if ($value != ".") {
-                       if ($value != "..") {
-                         if ($value != $teema) {
-                           echo "<option value='" . $value . "'>" . $value . "</option>";
-                         }
-                       }
-                     }
-                   }
-                   $value = "bootstrap";
-                   if ($value != $teema) {
-                     echo "<option value='" . $value . "'>" . $value . "</option>";
-                   }
-                   ?>
-                 </select>
-               </div>
-            <?php
-          }
-           if ($editori === "yksinkertainen") {
-             ?>
-            <div id="editorit">
-               <div class="form-group col-md-6">
-                 <label for="editorit">Editori:</label>
-                 <div class="radio">
-                   <label><input type="radio" name="editori" value="yksinkertainen" checked>Yksinkertainen (Teemat ei ole käytössä)</label>
-                 </div>
-               </div>
-               <div class="form-group col-md-6">
-                 <br>
-                 <div class="radio">
-                   <label><input type="radio" name="editori" value="vedajatiputa">Vedä ja tiputa</label>
-                 </div>
-               </div>
-             </div>
-             <?php
-           } else { ?>
-
-               <div id="editorit">
-                <div class="form-group col-md-6">
-                  <label for="editorit">Editori:</label>
-                  <div class="radio">
-                    <label><input type="radio" name="editori" value="yksinkertainen">Yksinkertainen (Teemat ei ole käytössä)</label>
-                  </div>
-                </div>
-                <div class="form-group col-md-6">
-                  <br>
-                  <div class="radio">
-                    <label><input type="radio" name="editori" value="vedajatiputa" checked>Vedä ja tiputa</label>
-                  </div>
-                </div>
-              </div>
-           <?php
-           }
-           ?>
+          <div class="form-group col-md-12">
+            <label for="teema">Sivuston teema:</label>
+            <select class="form-control" id="teema" name="teema">
+              <option value="<?php echo $teema; ?>" checked><?php echo $teema; ?></option>
+              <?php
+              $teemat = scandir("laajennukset/css");
+              foreach ($teemat as $teemaksi) {
+                $teemaksi = str_replace(".css", "", $teemaksi);
+                if ($teemaksi != "." && $teemaksi != ".." && $teemaksi != $teema) {
+                  ?><option value="<?php echo str_replace(".css", "", $teemaksi); ?>" checked><?php echo $teemaksi; ?></option><?php
+                }
+              }
+               ?>
+            </select>
+          </div>
           <div class="form-group col-md-12">
             <input type='submit' class="btn btn-primary" value='Tallenna'>
           </div>
