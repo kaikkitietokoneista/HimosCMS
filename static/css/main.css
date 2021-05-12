@@ -1,0 +1,55 @@
+html, body {
+    margin: 0;
+}
+
+body {
+    display: flex;
+}
+
+.sivumenu {
+    flex-grow: 2;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #5c5c5c;
+    color: white;
+    min-height: 100vh;
+}
+
+.sivumenu a {
+    padding: 10px;
+    display: block;
+    text-decoration: none;
+    color: white;
+    transition: 0.4s;
+}
+
+.sivumenu a:hover {
+    background-color: #2e2e2e;
+}
+
+.artikkelialue {
+    flex-grow: 8;
+    margin-left: 50px;
+}
+
+h1 {
+    font-size: xx-large;
+}
+
+.artikkelialue header h1, p {
+    display: inline-block;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: black;
+}
+
+.artikkelialue header h1 {
+    padding-right: 10px;
+    border-right: 2px solid black;
+}
+
+.artikkeli {
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+.artikkeli h1 {
+    font-family: 'Merriweather', serif;
+}

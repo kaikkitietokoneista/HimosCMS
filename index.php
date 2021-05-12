@@ -1,57 +1,72 @@
 <?php
-include 'asetukset.php';
-require 'funktiot.php';
+        require_once 'vendor/autoload.php';
 
- ?>
-<link href="//netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
-<script src="//netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script>
-<title><?php echo $sivunnimi; ?></title>
-<style media="screen">
-  <?php
-  $kustomoitucss = "laajennukset/css/".$teema.".css";
+        $Parsedown = new Parsedown();
 
-  $tiedosto = fopen($kustomoitucss, "r");
-  $sisältö = fread($tiedosto, filesize($kustomoitucss));
-  echo $sisältö;
-   ?>
-</style>
-<div class="container">
-<?php
-
-    if ($automylaosa == "true") {
-      include 'automylaosa.php';
-    } else {
-      include 'osat/ylaosa';
-    }
-
-  	echo "<br>";
-
-    if ($_GET["s"]) {
-      $haluttusivu = $_GET["s"];
-      katsottusivu($_SERVER["REMOTE_ADDR"], htmlspecialchars(basename($haluttusivu)));
-      $haluttusivusuojattuna = "sivut/" . basename($haluttusivu);
-      if (file_exists($haluttusivusuojattuna) == TRUE) {
-        $tiedosto = fopen($haluttusivusuojattuna, "r");
-        $sisältö = fread($tiedosto, filesize($haluttusivusuojattuna));
-        echo $sisältö;
-
-      } else {
-        ?>
-        <div class="alert alert-warning alert-dismissible" role="alert">
-          <span type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></span>
-          <strong>Sivua ei ole olemassa.</strong>
-        </div>
-        <?php
-      }
-    } else {
-      katsottusivu($_SERVER["REMOTE_ADDR"], "Etusivu");
-      include 'osat/keskiosa';
-    }
-
-  	echo "<br>";
-
-  	include 'osat/alaosa';
-
+        $sivut = scandir('sivut');
 ?>
-</div>
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+    <!-- https://coolors.co/000000-171717-1c1c1c-2e2e2e-454545-5c5c5c-->
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/css/main.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital@1&display=swap" rel="stylesheet"> 
+    <title></title>
+</head>
+<body>
+    <nav class="sivumenu">
+        <center><h2>Artikkelit</h2></center>
+        <?php
+            foreach ($sivut as $sivu) {
+                if ($sivu[0] != '.') { //Ei piilotettuja tiedostoja
+                    $sivun_nimi = str_replace(".md", "",$sivu);
+                    ?>
+                        <a href="/?sivu=<?php echo $sivun_nimi ?>">
+                            <?php echo $sivun_nimi ?>
+                        </a>
+                    <?php
+                }
+            }
+        ?>
+    </nav>
+    <div class="artikkelialue">
+        <header>
+            <a href="/"><h1>HimosCMS</h1></a>
+            <p>Tietokonekeskittynyt blogi</p>
+        </header>
+
+        <article class="artikkeli">
+            <?php
+            if (isset($_GET["sivu"])) {
+                $sivu = str_replace('/', '_', $_GET["sivu"]);
+
+                $polku = 'sivut/'.$sivu.'.md';
+
+                //Lisää 404 koodi myös headeriin
+                if (file_exists($polku)) {
+                    $sisältö = file_get_contents($polku);
+                    
+                    echo $Parsedown->text($sisältö);
+                } else {
+                    ?>
+                    <h1>404</h1>
+                    <p>
+                        Sivua ei löytynyt.
+                    </p>
+                    <?php
+                }
+            } else {
+                ?>
+                <!-- TODO: jotain hienoa tähän -->
+                <-- Valitse vasemmalta artikkeli
+                <?php
+            }
+            ?>
+        </article>
+    </div>
+</body>
+</html>
